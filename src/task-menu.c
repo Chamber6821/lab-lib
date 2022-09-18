@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include "task-menu.h"
 #include "input.h"
+#include "string-utils.h"
 
 void clear() {
     system("cls");
@@ -16,12 +17,15 @@ void displayMenu(MenuInfo info) {
 }
 
 size_t inputTaskNumberToRun(size_t taskCount) {
-    return inputNatural0("Please enter task number to run: ");
+    return inputIntInRange("Please enter task number to run: ", 0, taskCount);
 }
 
 void waitPressEnter() {
     printf("\nPress Enter to exit. ");
-    getchar();
+
+    // wait for Enter to be pressed
+    // and skip trash line
+    free(readString(stdin));
 }
 
 void startMenu(MenuInfo info) {
