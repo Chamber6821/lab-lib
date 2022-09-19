@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdbool.h>
 #include "task-menu.h"
 #include "input.h"
 #include "string-utils.h"
@@ -12,11 +13,12 @@ void displayMenu(MenuInfo info) {
     printf("Task Menu:\n");
     printf(" 0. Quit\n");
 
-    for (size_t i = 0; i < info.taskCount; i++)
+    for (size_t i = 0; i < info.taskCount; i++) {
         printf(" %llu. %s\n", i + 1, info.tasks[i].name);
+    }
 }
 
-size_t inputTaskNumberToRun(size_t taskCount) {
+int inputTaskNumberToRun(int taskCount) {
     return inputIntInRange("Please enter task number to run: ", 0, taskCount);
 }
 
@@ -43,7 +45,7 @@ void runTask(Task task) {
 }
 
 void startMenu(MenuInfo info) {
-    while (1) {
+    while (true) {
         clear();
         displayMenu(info);
         size_t taskNumber = inputTaskNumberToRun(info.taskCount);

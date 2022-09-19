@@ -9,7 +9,7 @@ typedef struct {
 
 typedef struct {
     const Task *tasks;
-    const size_t taskCount;
+    const int taskCount;
 } MenuInfo;
 
 void startMenu(MenuInfo info);
