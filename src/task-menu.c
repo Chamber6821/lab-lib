@@ -3,7 +3,6 @@
 #include <stdbool.h>
 #include "task-menu.h"
 #include "input.h"
-#include "string-utils.h"
 
 void clear() {
     system("cls");
@@ -22,12 +21,16 @@ int inputTaskNumberToRun(int taskCount) {
     return inputIntInRange("Please enter task number to run: ", 0, taskCount);
 }
 
+bool isEOL(int ch) {
+    return ch == '\n' || ch == EOF;
+}
+
 void waitPressEnter() {
     printf("\nPress Enter to exit. ");
 
     // wait for Enter to be pressed
     // and skip trash line
-    free(readString(stdin));
+    while (!isEOL(getchar()));
 }
 
 void printSeparator(int length) {
