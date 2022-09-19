@@ -28,6 +28,20 @@ void waitPressEnter() {
     free(readString(stdin));
 }
 
+void printSeparator(int length) {
+    while (length--) putc('-', stdout);
+    putc('\n', stdout);
+}
+
+void runTask(Task task) {
+    int length = printf("Task: %s\n", task.name);
+    printSeparator(length - 1);
+
+    task.run();
+
+    waitPressEnter();
+}
+
 void startMenu(MenuInfo info) {
     while (1) {
         clear();
@@ -37,9 +51,7 @@ void startMenu(MenuInfo info) {
         if (taskNumber == 0) break;
 
         clear();
-        info.tasks[taskNumber - 1].run();
-
-        waitPressEnter();
+        runTask(info.tasks[taskNumber - 1]);
     }
 
     printf("Bye bye...\n");
