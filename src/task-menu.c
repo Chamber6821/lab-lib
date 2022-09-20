@@ -1,8 +1,9 @@
+#include "task-menu.h"
+#include "input.h"
+#include "string-utils.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "task-menu.h"
-#include "input.h"
 
 void clear() {
     system("cls");
@@ -19,10 +20,6 @@ void displayMenu(MenuInfo info) {
 
 int inputTaskNumberToRun(int taskCount) {
     return inputIntInRange("Please enter task number to run: ", 0, taskCount);
-}
-
-bool isEOL(int ch) {
-    return ch == '\n' || ch == EOF;
 }
 
 void waitPressEnter() {
@@ -51,7 +48,7 @@ void startMenu(MenuInfo info) {
     while (true) {
         clear();
         displayMenu(info);
-        size_t taskNumber = inputTaskNumberToRun(info.taskCount);
+        int taskNumber = inputTaskNumberToRun(info.taskCount);
 
         if (taskNumber == 0) break;
 

@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <stdbool.h>
 
 char *concat(const char *left, const char *right) {
     const size_t size = strlen(left) + strlen(right) + 1;
@@ -50,4 +51,8 @@ char *lightTrimEnd(char *str) {
     str[i] = 0;
 
     return str;
+}
+
+bool isEOL(int ch) {
+    return ch == '\n' || ch == EOF;
 }
