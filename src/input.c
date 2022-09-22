@@ -1,9 +1,9 @@
 #include "input.h"
 #include "string-utils.h"
+#include "exclusive-math.h"
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
-#include <math.h> // for INFINITY, fabs
 #include <malloc.h>
 #include <locale.h>
 
@@ -47,10 +47,6 @@ int inputIntInRange(const char *prompt, int min, int max) {
                " Try again\n",
                min, max);
     }
-}
-
-bool doubleEquals(double a, double b, double epsilon) {
-    return fabs(a - b) < epsilon;
 }
 
 double inputDoubleInRange(const char *prompt,
