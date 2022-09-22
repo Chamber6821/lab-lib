@@ -100,8 +100,13 @@ bool tryParseWithLocale(const char *source, const char *bufferPattern, void *buf
 }
 
 bool tryParse(const char *source, const char *bufferPattern, void *buffer) {
-    size_t length = strlen(source);
-    size_t read = 0;
+    int length = (int)strlen(source);
+    if (length < 0) {
+        printf("tryParse: too big string (%llu)\n", (size_t)length);
+        return false;
+    }
+
+    int read = -1;
 
     char *pattern = concat(bufferPattern, "%n");
     sscanf(source, pattern, buffer, &read);
