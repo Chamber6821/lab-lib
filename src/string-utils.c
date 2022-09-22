@@ -22,20 +22,22 @@ char *readString(FILE *in) {
     char *buffer = malloc(size * sizeof(*buffer));
     if (buffer == NULL) exit(1);
 
-    for (int ch = fgetc(in); !(ch == EOF || ch == '\n'); ch = fgetc(in)) {
+    for (int ch = fgetc(in); !isEOL(ch); ch = fgetc(in)) {
         buffer[read++] = (char) ch;
 
         if (read >= size) {
             size *= 2;
 
-            char *newBuffer = realloc(buffer, sizeof(*buffer) * size);
+            size_t bufferSize = size * sizeof(*buffer);
+            char *newBuffer = realloc(buffer, bufferSize);
             if (newBuffer == NULL) exit(1);
             buffer = newBuffer;
         }
     }
     buffer[read++] = 0;
 
-    char *clippedBuffer = realloc(buffer, sizeof(*buffer) * size);
+    size_t bufferSize = size * sizeof(*buffer);
+    char *clippedBuffer = realloc(buffer, bufferSize);
     if (clippedBuffer == NULL) free(buffer);
 
     return clippedBuffer;

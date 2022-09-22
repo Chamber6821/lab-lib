@@ -1,19 +1,28 @@
+#include "input.h"
+#include "string-utils.h"
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
 #include <math.h> // for INFINITY, fabs
 #include <malloc.h>
 #include <locale.h>
-#include "input.h"
-#include "string-utils.h"
 
-void input(const char *prompt, const char *inputPattern, void *buffer);
+void input(const char *prompt,
+           const char *inputPattern,
+           void *buffer);
 
-bool tryInput(const char *prompt, const char *inputPattern, void *buffer);
+bool tryInput(const char *prompt,
+              const char *inputPattern,
+              void *buffer);
 
-bool tryParseWithLocale(const char *source, const char *bufferPattern, void *buffer, const char *locale);
+bool tryParseWithLocale(const char *source,
+                        const char *bufferPattern,
+                        void *buffer,
+                        const char *locale);
 
-bool tryParse(const char *source, const char *bufferPattern, void *buffer);
+bool tryParse(const char *source,
+              const char *bufferPattern,
+              void *buffer);
 
 double inputDoublePositive(const char *prompt) {
     return inputDoubleInRange(prompt, 0, INFINITY, MAX_LIMIT);
@@ -34,7 +43,9 @@ int inputIntInRange(const char *prompt, int min, int max) {
 
         if (min <= value && value <= max) return value;
 
-        printf("Must be in range from %d to %d. Try again\n", min, max);
+        printf("Must be in range from %d to %d."
+               " Try again\n",
+               min, max);
     }
 }
 
@@ -42,7 +53,10 @@ bool doubleEquals(double a, double b, double epsilon) {
     return fabs(a - b) < epsilon;
 }
 
-double inputDoubleInRange(const char *prompt, double min, double max, RangeInclude include) {
+double inputDoubleInRange(const char *prompt,
+                          double min,
+                          double max,
+                          RangeInclude include) {
     const char leftPar = (include & MIN_LIMIT) ? '[' : '(';
     const char rightPar = (include & MAX_LIMIT) ? ']' : ')';
 
@@ -50,11 +64,17 @@ double inputDoubleInRange(const char *prompt, double min, double max, RangeInclu
         double value = inputDouble(prompt);
 
         bool isInRange = min < value && value < max;
-        bool isMin = (include & MIN_LIMIT) && doubleEquals(min, value, 0.0001);
-        bool isMax = (include & MAX_LIMIT) && doubleEquals(max, value, 0.0001);
+
+        bool isMin = (include & MIN_LIMIT) &&
+                     doubleEquals(min, value, 0.0001);
+
+        bool isMax = (include & MAX_LIMIT) &&
+                     doubleEquals(max, value, 0.0001);
+
         if (isInRange || isMin || isMax) return value;
 
-        printf("Must be in range %c%lf, %lf%c. Try again\n", leftPar, min, max, rightPar);
+        printf("Must be in range %c%lf, %lf%c. Try again\n",
+               leftPar, min, max, rightPar);
     }
 }
 
@@ -64,8 +84,12 @@ double inputDouble(const char *prompt) {
 
         printf("%s", prompt);
         char *string = lightTrimEnd(readString(stdin));
-        bool success = tryParseWithLocale(string, "%lf", &value, "C")
-                || tryParseWithLocale(string, "%lf", &value, "Russian");
+        bool success =
+                tryParseWithLocale(string, "%lf", &value, "C")
+                || tryParseWithLocale(string,
+                                      "%lf",
+                                      &value,
+                                      "Russian");
         free(string);
 
         if (success) return value;
@@ -73,13 +97,17 @@ double inputDouble(const char *prompt) {
     }
 }
 
-void input(const char *prompt, const char *inputPattern, void *buffer) {
+void input(const char *prompt,
+           const char *inputPattern,
+           void *buffer) {
     while (!tryInput(prompt, inputPattern, buffer)) {
         printf("Wrong! Try again\n");
     }
 }
 
-bool tryInput(const char *prompt, const char *inputPattern, void *buffer) {
+bool tryInput(const char *prompt,
+              const char *inputPattern,
+              void *buffer) {
     printf("%s", prompt);
 
     char *string = lightTrimEnd(readString(stdin));
@@ -89,8 +117,12 @@ bool tryInput(const char *prompt, const char *inputPattern, void *buffer) {
     return status;
 }
 
-bool tryParseWithLocale(const char *source, const char *bufferPattern, void *buffer, const char *locale) {
-    const char *oldLocale = setlocale(LC_NUMERIC, NULL);
+bool tryParseWithLocale(const char *source,
+                        const char *bufferPattern,
+                        void *buffer,
+                        const char *locale) {
+    const char *oldLocale =
+            setlocale(LC_NUMERIC, NULL);
 
     setlocale(LC_NUMERIC, locale);
     bool success = tryParse(source, bufferPattern, buffer);
@@ -99,10 +131,12 @@ bool tryParseWithLocale(const char *source, const char *bufferPattern, void *buf
     return success;
 }
 
-bool tryParse(const char *source, const char *bufferPattern, void *buffer) {
-    int length = (int)strlen(source);
+bool tryParse(const char *source, const char *bufferPattern,
+              void *buffer) {
+    int length = (int) strlen(source);
     if (length < 0) {
-        printf("tryParse: too big string (%llu)\n", (size_t)length);
+        printf("tryParse: too big string (%llu)\n",
+               (size_t) length);
         return false;
     }
 

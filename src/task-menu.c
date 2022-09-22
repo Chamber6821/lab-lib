@@ -19,7 +19,8 @@ void displayMenu(MenuInfo info) {
 }
 
 int inputTaskNumberToRun(int taskCount) {
-    return inputIntInRange("Please enter task number to run: ", 0, taskCount);
+    return inputIntInRange("Please enter task number to run: ",
+                           0, taskCount);
 }
 
 void waitPressEnter() {
