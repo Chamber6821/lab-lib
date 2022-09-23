@@ -3,7 +3,6 @@
 #include "exclusive-math.h"
 #include <stdio.h>
 #include <stdbool.h>
-#include <string.h>
 #include <malloc.h>
 #include <locale.h>
 

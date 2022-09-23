@@ -1,7 +1,6 @@
 #include "string-utils.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <ctype.h>
 #include <stdbool.h>
 
@@ -57,4 +56,10 @@ char *lightTrimEnd(char *str) {
 
 bool isEOL(int ch) {
     return ch == '\n' || ch == EOF;
+}
+
+size_t strlen(const char *string) {
+    size_t len = 0;
+    while (string[len] != 0) len++;
+    return len;
 }

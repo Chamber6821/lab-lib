@@ -10,3 +10,5 @@ char *readString(FILE *in);
 char *lightTrimEnd(char *str);
 
 bool isEOL(int ch);
+
+size_t strlen(const char *string);
